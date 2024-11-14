@@ -145,7 +145,7 @@ const Stage = () => {
   return (
     <Container id="stage">
       <Header>
-        <Title>Your Journey to Inner Peace</Title>
+        <Title>Your Journey to Inner Peac</Title>
         <Subtitle>Unlock each stage to progress on your path to mindfulness and self-discovery</Subtitle>
       </Header>
       <StagesContainer>
@@ -266,6 +266,8 @@ const Header = styled.header`
   text-align: center;
   margin-bottom: 2rem;
   padding:10px;
+  box-shadow: none;
+  position: relative;
   
 `;
 
@@ -306,7 +308,7 @@ const StageCard = styled.div`
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
   cursor: pointer;
-  width:380px;
+  width:340px;
 
   ${({ active }) => active && `
     transform: translateY(-5px);
@@ -319,7 +321,7 @@ const StageCard = styled.div`
 `;
 
 const StageImage = styled.img`
-  width: 100%;
+  width: 90vw;
   height: 200px;
   object-fit: cover;
 `;
@@ -394,23 +396,36 @@ const LockedMessage = styled.p`
 `;
 
 const ProgressIndicator = styled.div`
+  margin-top: 1.5rem;
   text-align: center;
-  margin-top: 2rem;
 `;
 
 const ProgressText = styled.p`
   font-size: 1rem;
   color: #333;
+  margin-bottom: 0.5rem;
 `;
 
 const ProgressBar = styled.div`
-  background-color: #4a90e2;
+  background-color: #e0e0e0;
   height: 10px;
-  width: ${({ width }) => width || 0}%;
-  max-width: 100%;
   border-radius: 5px;
-  transition: width 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+
+  &:after {
+    content: '';
+    background-color: #4a90e2;
+    height: 100%;
+    width: ${({ width }) => `${width}%`};
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
+
 
 
 export default Stage;

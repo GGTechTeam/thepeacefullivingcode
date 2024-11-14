@@ -16,6 +16,7 @@ const Login = ({ onClose }) => {
   
     try {
       // Making a POST request to the login API
+      console.log("msg : ",Api);
       const response = await Api.post('/Auth/login', { email, password });
       const { accessToken, user } = response.data;
   
