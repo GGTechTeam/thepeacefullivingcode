@@ -6,24 +6,24 @@ const FAQComponent = () => {
 
   const faqData = [
     {
-      question: "What is Soul Streach?",
-      answer: "Soul Streach is a comprehensive mental wellness program designed to help individuals find balance, reduce stress, and improve overall well-being through mindfulness practices, guided meditation, and personalized growth strategies."
+      question: "What is ThePeacefulLiving?",
+      answer: "ThePeacefulLiving is a comprehensive mental wellness program designed to help individuals find balance, reduce stress, and improve overall well-being through mindfulness practices, guided meditation, and personalized growth strategies."
     },
     {
       question: "How often should I practice the techniques?",
-      answer: "For best results, we recommend practicing the Soul Streach techniques daily, even if just for 10-15 minutes. Consistency is key to experiencing the full benefits of the program."
+      answer: "For best results, we recommend practicing the ThePeacefulLiving techniques daily, even if just for 10-15 minutes. Consistency is key to experiencing the full benefits of the program."
     },
     {
-      question: "Is Soul Streach suitable for beginners?",
-      answer: "Absolutely! Soul Streach is designed for individuals at all levels, from complete beginners to those with experience in mindfulness and meditation. Our program offers a gradual progression to accommodate all skill levels."
+      question: "Is ThePeacefulLiving suitable for beginners?",
+      answer: "Absolutely! ThePeacefulLiving is designed for individuals at all levels, from complete beginners to those with experience in mindfulness and meditation. Our program offers a gradual progression to accommodate all skill levels."
     },
     {
-      question: "Can I access Soul Streach on multiple devices?",
-      answer: "Yes, you can access Soul Streach on any device with an internet connection. Our platform is fully responsive and works seamlessly on desktops, laptops, tablets, and smartphones."
+      question: "Can I access ThePeacefulLiving on multiple devices?",
+      answer: "Yes, you can access ThePeacefulLiving on any device with an internet connection. Our platform is fully responsive and works seamlessly on desktops, laptops, tablets, and smartphones."
     },
     {
       question: "What if I'm not satisfied with the program?",
-      answer: "We offer a 30-day money-back guarantee. If you're not completely satisfied with Soul Streach within the first 30 days, you can request a full refund, no questions asked."
+      answer: "We offer a 30-day money-back guarantee. If you're not completely satisfied with ThePeacefulLiving within the first 30 days, you can request a full refund, no questions asked."
     }
   ];
 

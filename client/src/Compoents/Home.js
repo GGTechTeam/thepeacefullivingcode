@@ -48,9 +48,9 @@ const Button = styled.button`
   padding: 15px 25px;
   font-size: 1rem;
   font-family: Poppins;
-  color: #fff;
+  color: black;
   background-color: transparent;
-  border: 2px solid #fff;
+  border: 2px solid black;
   border-radius: 30px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
@@ -58,6 +58,7 @@ const Button = styled.button`
   &:hover {
     background-color: #fff;
     color: #FDA537;
+    border: 2px solid white;
 }
 
   @media (max-width: 768px) {

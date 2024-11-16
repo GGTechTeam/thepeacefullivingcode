@@ -150,7 +150,7 @@ const Home = () => {
         <div className="header-content">
           <div className="header-left">
             <img src={logo} alt="Logo" className="logo" />
-            <h2>Soul Stretch</h2>
+            <h2>ThePeacefulLiving</h2>
           </div>
           <div className="header-right">
             <div className="user-profile" onClick={() => setShowDropdown(!showDropdown)}>
