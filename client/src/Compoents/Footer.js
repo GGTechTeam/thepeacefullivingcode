@@ -146,7 +146,7 @@ const Footer = () => {
       <ContentWrapper>
         <Grid>
           <Column>
-            <Title>Mental Peace</Title>
+            <Title>ThePeacefulLiving</Title>
             <Text>Cultivating inner calm and balance in your daily life.</Text>
             <SocialIcons>
               {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
@@ -199,7 +199,7 @@ const Footer = () => {
         </Grid>
         
         <Copyright>
-          © 2024 Mental Peace. All rights reserved.
+          © 2024 ThePeacefulLiving. All rights reserved.
         </Copyright>
       </ContentWrapper>
     </FooterContainer>

@@ -145,7 +145,7 @@ const Stage = () => {
   return (
     <Container id="stage">
       <Header>
-        <Title>Your Journey to Inner Peac</Title>
+        <Title>Your Journey to Inner Peace</Title>
         <Subtitle>Unlock each stage to progress on your path to mindfulness and self-discovery</Subtitle>
       </Header>
       <StagesContainer>
@@ -285,7 +285,7 @@ const Subtitle = styled.p`
 const StagesContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 0.5rem;
 `;
 
 const NoCoursesMessage = styled.p`
@@ -308,7 +308,7 @@ const StageCard = styled.div`
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
   cursor: pointer;
-  width:340px;
+  width:360px;
 
   ${({ active }) => active && `
     transform: translateY(-5px);
