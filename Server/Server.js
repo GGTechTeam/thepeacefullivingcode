@@ -10,6 +10,8 @@ const authRoutes = require('./Router/Router');
 const QuestionRoute = require('./Router/Question')
 const  courseRoutes = require('./Router/Course');
 const responseRoutes = require('./Router/Response')
+const Admin = require('./Model/Admin')
+const bcrypt = require('bcrypt')
 // Initialize Express app
 const app = express();
 
@@ -33,7 +35,6 @@ app.use('/response',responseRoutes)
 //API Admin Routes
 
 app.use('/Admin',require('./Router/AdminRoute'))
-
 
 
 
