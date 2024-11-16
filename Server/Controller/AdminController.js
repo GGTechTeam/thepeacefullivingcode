@@ -235,16 +235,16 @@ const registerUserByAdmin = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'dharaneedharanchinnusamy@gmail.com', // Your Gmail address
+        user: 'lgl.disc.uat@gmail.com', // Your Gmail address
         pass: process.env.PASS, // Use environment variable for password
       },
     });
 
     const mailOptions = {
-      from: 'dharaneedharanchinnusamy@gmail.com',
+      from: 'lgl.disc.uat@gmail.com',
       to: newUser.email,
-      subject: 'Welcome to Our Service!',
-      text: `Hello ${newUser.name},\n\nThank you for registering. Here are your credentials:\n\nEmail: ${newUser.email}\nPassword: ${password}\n\nYou have been allocated to this batch No: ${batchno}. We recommend that you change your password after logging in for the first time.\n\nBest regards,\nYour App Team`,
+      subject: 'Welcome to ThePeaceFulLiving!',
+      text: `Hello ${newUser.name},\n\nThank you for registering. Here are your credentials:\n\nEmail: ${newUser.email}\nPassword: ${password}\n\nYou have been allocated to this batch No: ${batchno}. We recommend that you change your password after logging in for the first time.\n\nBest regards,\n ThePeaceFulLiving`,
     };
 
     // Send the email

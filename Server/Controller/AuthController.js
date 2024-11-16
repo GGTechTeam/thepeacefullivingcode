@@ -81,13 +81,13 @@ const gtpOtps = async (req, res) => {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: "dharaneedharanchinnusamy@gmail.com",
+                user: "lgl.disc.uat@gmail.com",
                 pass: PASS
             }
         });
 
         const mailOptions = {
-            from: "dharaneedharanchinnusamy@gmail.com",
+            from: "lgl.disc.uat@gmail.com",
             to: email,
             subject: "Email Verification OTP",
             html: `
@@ -96,7 +96,7 @@ const gtpOtps = async (req, res) => {
                 <p><strong>Your OTP for email verification is:</strong></p>
                 <h1 style="color: black;">${otp}</h1>
                 <p>Please use this OTP to verify your email.</p>
-                <p>Best regards,<br/>Your App Team</p>
+                <p>Best regards,<br/>ThePeaceFulLiving</p>
               </div>
             `
         };
@@ -188,13 +188,13 @@ const resetPassword = async(req,res) =>{
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: "dharaneedharanchinnusamy@gmail.com",
+                user: "lgl.disc.uat@gmail.com",
                 pass: PASS
             }
         });
 
         const mailOptions = {
-            from: "dharaneedharanchinnusamy@gmail.com", 
+            from: "lgl.disc.uat@gmail.com", 
             to: user.email,
             subject: "Password Reset Request",
             text: `Hello ${user.name},\n\nYou requested to reset your password. Please use the following token to reset your password:\n\n${token}\n\nIf you didn't request this, please ignore this email.\n\nBest regards,\nYour App Team`
