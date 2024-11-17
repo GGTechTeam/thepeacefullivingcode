@@ -12,15 +12,23 @@ import Pricing from '../Compoents/Pricing'
 import For from '../Compoents/Whoisfor'
 import Notfor from '../Compoents/Notfor'
 import Faq from '../Compoents/Faq'
+import AudioPlayer from '../Compoents/podcast'
+import YouTubePlayer from '../Compoents/Youtube'
 
 const Main = () => {
+    const videoUrl = "https://youtu.be/056qll-07ak?si=nPae2c4A5iaYHgEt";
+    const videoId = videoUrl.split('/').pop().split('?')[0];
+
+    const audioPath = 'Freelancer-k\client\src\Assest\music.mp3';
+
   return (
  <>
  <Nav/>
  <Home/>
+ <AudioPlayer />
  {/* <Box/> */}
  <Levels/>
-
+<YouTubePlayer videoId={videoId}/>
  <Offer/>
  <TakeCourse/>
  {/* <Certified/> */}
