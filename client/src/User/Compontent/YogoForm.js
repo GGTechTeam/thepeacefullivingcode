@@ -12,6 +12,7 @@ const YogoForm = () => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [date, setDate] = useState(''); // Initialize the date state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,7 +42,6 @@ const YogoForm = () => {
     }
   };
   
-
   const handleInputChange = (questionId, value) => {
     setFormData({
       ...formData,
@@ -76,6 +76,7 @@ const YogoForm = () => {
     const submissionData = {
       courseId,
       studentId,
+      date,  // Include the date field in the submission data
       responses: questions.map((question) => ({
         questionId: question._id || question.id,  // Use `_id` or `id` depending on the response format
         answer: formData[question._id || question.id] || "",
@@ -84,7 +85,7 @@ const YogoForm = () => {
         options: question.options,
       })),
     };
-    console.log(submissionData)
+    console.log("submission date : ",submissionData)
     try {
       await Api.post(`/api/courses/${courseId}/submit-daily-responses`, submissionData, {
         headers: { Authorization: `Bearer ${token}` },
@@ -98,7 +99,6 @@ const YogoForm = () => {
     }
   };
   
-
   const nextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -114,7 +114,9 @@ const YogoForm = () => {
   const handleBackClick = () => {
     navigate('/UserPanel');
   };
-
+  const handleChange = (e) => {
+    setDate(e.target.value);
+  };
   if (loading) {
     return (
       <CenteredContainer>
@@ -132,7 +134,13 @@ const YogoForm = () => {
             Back
           </BackButton>
           <Flower size={48} color="#4caf50" />
-          <h2>Mindfulness Questionnaire</h2>
+          <h2>Mindfulness Questionnaires</h2>
+          <Input
+           type='date'
+           value={date}
+           onChange={handleChange}
+           required
+          />
         </Header>
         <ProgressBar progress={(currentQuestionIndex + 1) / questions.length * 100} />
         <form onSubmit={handleSubmit}>

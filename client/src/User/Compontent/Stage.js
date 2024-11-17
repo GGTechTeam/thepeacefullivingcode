@@ -321,10 +321,34 @@ const StageCard = styled.div`
 `;
 
 const StageImage = styled.img`
-  width: 90vw;
+  width: 100%;
   height: 200px;
   object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  /* Responsive for tablets and smaller screens */
+  @media (max-width: 1024px) {
+    height: 180px; /* Adjust height for tablets */
+  }
+
+  /* Responsive for medium-sized devices */
+  @media (max-width: 768px) {
+    height: 150px; /* Adjust height for smaller tablets */
+  }
+
+  /* Responsive for mobile devices */
+  @media (max-width: 480px) {
+    height: 120px; /* Adjust height for small mobile devices */
+  }
+
+  /* Very small screens like portrait phones */
+  @media (max-width: 320px) {
+    height: 100px; /* Adjust height for very small mobile devices */
+  }
 `;
+
 
 const StageContent = styled.div`
   padding: 1.5rem;

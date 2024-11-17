@@ -37,17 +37,19 @@ const MindfulnessProgress = () => {
         }
     };
 
-    // Fetch responses based on course with error handling and logging
     const fetchResponses = async (courseId) => {
         try {
             console.log('Fetching responses for course:', courseId);
             const studentId = JSON.parse(localStorage.getItem('user'))?.studentId;
             const { data } = await Api.get(`response/analytics/${courseId}/${studentId}`);
+            
             if (data && data.analytics) {
-                // Format responseData to include the dates for each response
+                // Format responseData to include the dates for each response, ensuring responseDates is an array
                 const formattedData = data.analytics.map(question => ({
                     ...question,
-                    responseDates: question.responseDates.map(date => new Date(date).toLocaleDateString())
+                    responseDates: Array.isArray(question.responseDates) 
+                        ? question.responseDates.map(date => new Date(date).toLocaleDateString()) 
+                        : [] // Fallback to an empty array if responseDates is not an array
                 }));
                 setResponseData(formattedData);
                 console.log('Response data fetched:', formattedData);
@@ -62,6 +64,7 @@ const MindfulnessProgress = () => {
             console.error('Error fetching responses:', error.message || error);
         }
     };
+    
 
     // Handle stage click and fetch responses for the selected course
     const handleStageClick = (index) => {
