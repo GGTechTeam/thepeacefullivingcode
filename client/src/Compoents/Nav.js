@@ -65,7 +65,7 @@ const Nav = ({ isLoggedIn }) => {
       <MainContent>
         <NavSection>
           <Logo>
-            <h3 href="#home" onClick={handleLinkClick}><span>The Peaceful Living</span></h3>
+            <h3 href="#home" onClick={handleLinkClick}><span>The Peaceful Living.org</span></h3>
           </Logo>
           <NavLinks>
             <NavLink href="#home" onClick={handleLinkClick}>Home</NavLink>
