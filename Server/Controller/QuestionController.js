@@ -45,9 +45,10 @@ const getQuestions = async (req, res) => {
 };
 
 const submitResponses = async (req, res) => {
-  const { courseId } = req.params; // Extract courseId and studentId from params
-  const { responses ,studentId} = req.body; // Get the responses from the request body
-console.log(studentId,courseId)
+  const { courseId } = req.params; // Extract courseId from params
+  const { responses, studentId, date } = req.body; // Get responses, studentId, and date from the request body
+  console.log("submit-ressponse : ",studentId, courseId, date); // Log for debugging
+
   try {
     // Log the incoming responses to check the structure
     console.log('Received responses:', responses);
@@ -66,6 +67,7 @@ console.log(studentId,courseId)
         courseId,
         studentId,
         responses: [], // Initialize the responses as an empty array
+        submissionDate: new Date(), // Set the overall submission date
       });
     }
 
@@ -76,20 +78,21 @@ console.log(studentId,courseId)
         throw new Error('Missing required fields in one or more responses.');
       }
 
-      // Push the new response to the responses array (we don't check if the question exists)
+      // Ensure `date` is provided for each response, or set it to the current date if not provided
+      const responseDate = newResponse.date || new Date();  // Use the date provided or default to the current date
+
+      // Push the new response to the responses array with the custom `date` for each response
       responseDoc.responses.push({
         questionText: newResponse.questionText,
         answerType: newResponse.answerType,
         answer: newResponse.answer,
-        responseDate: new Date(),
+        responseDate: date, // Set the date for each individual response
       });
     });
 
-    // Update the overall submission date
-    responseDoc.submissionDate = new Date();
-
     // Save the updated document
-    await responseDoc.save();
+    const result = await responseDoc.save();
+    console.log(result);
 
     res.status(200).json({ message: 'Responses stored successfully!' });
   } catch (error) {
@@ -97,6 +100,8 @@ console.log(studentId,courseId)
     res.status(500).json({ message: 'Error storing responses', error: error.message });
   }
 };
+
+
 
 
 module.exports = {

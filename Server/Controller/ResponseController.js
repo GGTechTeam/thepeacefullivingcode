@@ -80,6 +80,14 @@ const analytics = async (req, res) => {
     // Execute the aggregation
     const analyticsResults = await Response.aggregate(aggregatePipeline).exec();
 
+    // Additional response date and answer analysis
+    analyticsResults.forEach(question => {
+      console.log(`Question: ${question.questionText}`);
+      question.responseDates.forEach((date, index) => {
+        console.log(`  Response Date: ${date}, Answer: ${question.allAnswers[index]}`);
+      });
+    });
+
     // Prepare additional metadata or statistics if needed
     const responseMetadata = {
       totalQuestions: analyticsResults.length,
