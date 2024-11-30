@@ -3,22 +3,22 @@ import { Play, Pause } from "lucide-react";
 import WaveSurfer from "wavesurfer.js";
 import styled from "styled-components";
 import audioFile from "../Assest/music.mp3"; // Replace with your audio file path
-import YouTubePlayer from "./Youtube"; // Import YouTubePlayer component
 
 // Styled Components
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
- 
   width: 100%;
   max-width: 1200px;
+  padding: 0 20px;
+  margin: 0 auto;
 `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
-  color: #fff;
-  margin-bottom: 20px;
+  color: #2d3436;
+  margin-bottom: 30px;
   text-align: center;
 
   span:first-child {
@@ -30,46 +30,47 @@ const Title = styled.h1`
   }
 `;
 
-const SectionContainer = styled.div`
+const ContentContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 40px;
   width: 100%;
-  max-width: 900px;
+  gap: 40px;
+  justify-content: center;
 
   @media (max-width: 1024px) {
     flex-direction: column;
+    align-items: center;
     gap: 20px;
-  }
-
-  @media (max-width: 768px) {
-    gap: 15px;
   }
 `;
 
-const Container = styled.div`
+const AudioSection = styled.div`
+  width: 100%;
+  max-width: 500px;
   display: flex;
-  margin: 10px;
-  flex-direction: row;
-  align-items: center;
-  width: 90%;
-  height: 50%;
-  max-width: 350px;
-  background: #f8f8f8;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  padding: 20px;
+  flex-direction: column;
+  margin-top:7%;
 
   @media (max-width: 1024px) {
     max-width: 100%;
-    padding: 15px;
   }
+`;
 
-  @media (max-width: 768px) {
+const VideoSection = styled.div`
+  width: 100%;
+  max-width: 600px;
+
+  @media (max-width: 1024px) {
     max-width: 100%;
-    padding: 10px;
   }
+`;
+
+const AudioContainer = styled.div`
+  display: flex;
+  align-items: center;
+  background: #f8f8f8;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 `;
 
 const PlayPauseButton = styled.button`
@@ -84,20 +85,21 @@ const PlayPauseButton = styled.button`
   cursor: pointer;
   transition: background 0.3s ease;
   color: #fff;
-  margin-bottom: 20px;
+  margin-right: 20px;
 
   &:hover {
     background: #555;
   }
 
   @media (max-width: 768px) {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
   }
 `;
 
 const WaveContainer = styled.div`
-  width: 100%;
+  flex-grow: 1;
   height: 120px;
 
   @media (max-width: 768px) {
@@ -105,47 +107,46 @@ const WaveContainer = styled.div`
   }
 `;
 
-const YouTubeContainer = styled.div`
-  width: 90%;
-  max-width: 600px;
+const VideoContainer = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
   border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+`;
 
-  @media (max-width: 1024px) {
-    max-width: 100%;
-    padding: 0 10px;
-  }
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-    padding: 0;
-  }
+const VideoIframe = styled.iframe`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 `;
 
 const Footer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+  margin-top: 30px;
+  text-align: center;
 `;
 
 const FooterText = styled.p`
+  color: #636e72;
   font-size: 1rem;
-  color: #888;
 `;
 
-// Main Component
-const AudioPlayer = () => {
+const PodcastPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const waveSurferRef = useRef(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
+    // Initialize WaveSurfer
     waveSurferRef.current = WaveSurfer.create({
       container: containerRef.current,
       waveColor: "#999",
       progressColor: "black",
-      cursorColor: "#fff",
+      cursorColor: "#333",
       barWidth: 2,
       barRadius: 2,
       height: 120,
@@ -176,20 +177,29 @@ const AudioPlayer = () => {
       <Title>
         <span>Amazing</span> <span>Podcast</span>
       </Title>
-      <SectionContainer>
-        {/* Audio Player Section */}
-        <Container>
-          <PlayPauseButton onClick={togglePlay}>
-            {isPlaying ? <Pause size={48} /> : <Play size={48} />}
-          </PlayPauseButton>
-          <WaveContainer ref={containerRef}></WaveContainer>
-        </Container>
+      
+      <ContentContainer>
+        <AudioSection>
+          <AudioContainer>
+            <PlayPauseButton onClick={togglePlay}>
+              {isPlaying ? <Pause size={48} /> : <Play size={48} />}
+            </PlayPauseButton>
+            <WaveContainer ref={containerRef}></WaveContainer>
+          </AudioContainer>
+        </AudioSection>
 
-        {/* YouTube Video Section */}
-        <YouTubeContainer>
-          <YouTubePlayer videoId="056qll-07ak" /> {/* YouTube Video ID from the URL */}
-        </YouTubeContainer>
-      </SectionContainer>
+        <VideoSection>
+          <VideoContainer>
+            <VideoIframe
+              src="https://www.youtube.com/embed/056qll-07ak"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Podcast Video"
+            />
+          </VideoContainer>
+        </VideoSection>
+      </ContentContainer>
+
       <Footer>
         <FooterText>Enjoy the podcast and video content!</FooterText>
       </Footer>
@@ -197,4 +207,4 @@ const AudioPlayer = () => {
   );
 };
 
-export default AudioPlayer;
+export default PodcastPlayer;
