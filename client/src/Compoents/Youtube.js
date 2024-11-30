@@ -10,11 +10,10 @@ const YouTubePlayer = ({ videoId }) => {
                     .youtube-player {
                         width: 100%;
                         max-width: 800px;
-                        margin: 20px auto;
-                        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                        margin: 20px 20px;
                         border-radius: 12px;
                         padding: 20px;
-                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                        margin-right:5rem;
                     }
 
                     .video-container {

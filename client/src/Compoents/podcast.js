@@ -12,7 +12,8 @@ const PageContainer = styled.div`
   align-items: center;
   margin-top: 40px;
   width: 100%; /* Ensure the container takes full width */
-  min-width: 900px; /* Enforce a minimum width */
+  min-width: 400px; /* Enforce a minimum width */
+  margin: 0px 20px;
 `;
 
 const Container = styled.div`
