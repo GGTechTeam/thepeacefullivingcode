@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'https://api.thepeacefulliving.org/'
+  baseURL: 'http://localhot:3500'
 });
