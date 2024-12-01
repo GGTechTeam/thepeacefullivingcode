@@ -70,6 +70,7 @@ const PodcastPlayer = () => {
       duration: "47:56",
       description: "Innovative solutions for environmental challenges and sustainability."
     }
+    
   ];
 
   const selectedPodcast = podcastData[selectedPodcastIndex];
@@ -190,12 +191,13 @@ const PodcastPlayer = () => {
     },
     podcastList: {
       flex: '1 1 300px',
-      maxHeight: '600px',
+      maxHeight: '700px',
       overflowY: 'auto',
       backgroundColor: 'white',
       borderRadius: '10px',
       padding: '15px',
       boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+      overflowY:'auto'
     },
     podcastItem: {
       display: 'flex',
@@ -250,7 +252,7 @@ const PodcastPlayer = () => {
     },
     videoIframe: {
       width: '100%',
-      height: '300px',
+      height: '400px',
       border: 'none',
     }
   };
