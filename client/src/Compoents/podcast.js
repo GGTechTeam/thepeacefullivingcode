@@ -1,209 +1,368 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Play, Pause } from "lucide-react";
-import WaveSurfer from "wavesurfer.js";
-import styled from "styled-components";
-import audioFile from "../Assest/music.mp3"; // Replace with your audio file path
+import React, { useState, useRef, useEffect } from 'react';
+import { 
+  Play, 
+  Pause, 
+  Music, 
+  SkipForward, 
+  SkipBack, 
+  Volume2, 
+  VolumeX 
+} from 'lucide-react';
+import WaveSurfer from 'wavesurfer.js';
+import styled from 'styled-components';
 
-// Styled Components
-const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  padding: 0 20px;
-  margin: 0 auto;
-`;
+import audioFile1 from '../Assest/music.mp3';
+import audioFile2 from '../Assest/music.mp3';
+import audioFile3 from '../Assest/music.mp3';
+import audioFile4 from '../Assest/music.mp3';
+import audioFile5 from '../Assest/music.mp3';
 
-const Title = styled.h1`
+const PodcastPlayer = () => {
+  const [selectedPodcastIndex, setSelectedPodcastIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const waveSurferRef = useRef(null);
+  const containerRef = useRef(null);
+
+  const podcastData = [
+    {
+      id: 1,
+      title: "Startup Insights",
+      subtitle: "Entrepreneurship Podcast",
+      audioFile: audioFile1,
+      category: "Entrepreneurship",
+      duration: "42:35",
+      description: "Deep dive into startup ecosystem and entrepreneurial strategies."
+    },
+    {
+      id: 2,
+      title: "Tech Trends 2024",
+      subtitle: "Technology & Innovation",
+      audioFile: audioFile2,
+      category: "Technology",
+      duration: "55:12",
+      description: "Exploring cutting-edge technological innovations and future predictions."
+    },
+    {
+      id: 3,
+      title: "Digital Marketing Secrets",
+      subtitle: "Marketing Strategy",
+      audioFile: audioFile3,
+      category: "Marketing",
+      duration: "38:47",
+      description: "Insider tips and strategies for digital marketing success."
+    },
+    {
+      id: 4,
+      title: "AI and Future",
+      subtitle: "Technology Exploration",
+      audioFile: audioFile4,
+      category: "AI",
+      duration: "51:23",
+      description: "Comprehensive analysis of artificial intelligence's impact on society."
+    },
+    {
+      id: 5,
+      title: "Sustainable Innovation",
+      subtitle: "Environmental Tech",
+      audioFile: audioFile5,
+      category: "Environment",
+      duration: "47:56",
+      description: "Innovative solutions for environmental challenges and sustainability."
+    }
+  ];
+
+  const selectedPodcast = podcastData[selectedPodcastIndex];
+
+  const togglePlay = () => {
+    if (waveSurferRef.current) {
+      if (isPlaying) {
+        waveSurferRef.current.pause();
+      } else {
+        waveSurferRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const handlePrevious = () => {
+    const newIndex = selectedPodcastIndex > 0 
+      ? selectedPodcastIndex - 1 
+      : podcastData.length - 1;
+    
+    setSelectedPodcastIndex(newIndex);
+    setIsPlaying(false);
+  };
+
+  const handleNext = () => {
+    const newIndex = (selectedPodcastIndex + 1) % podcastData.length;
+    
+    setSelectedPodcastIndex(newIndex);
+    setIsPlaying(false);
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (waveSurferRef.current) {
+      waveSurferRef.current.setVolume(newVolume);
+    }
+  };
+
+  const toggleMute = () => {
+    if (waveSurferRef.current) {
+      const currentVolume = waveSurferRef.current.getVolume();
+      if (currentVolume > 0) {
+        waveSurferRef.current.setVolume(0);
+        setVolume(0);
+      } else {
+        waveSurferRef.current.setVolume(0.5);
+        setVolume(0.5);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (containerRef.current) {
+      // Destroy existing wavesurfer instance if it exists
+      if (waveSurferRef.current) {
+        waveSurferRef.current.destroy();
+      }
+
+      // Create new wavesurfer instance
+      const waveSurfer = WaveSurfer.create({
+        container: containerRef.current,
+        waveColor: 'rgba(74, 144, 226, 0.3)',
+        progressColor: '#4a90e2',
+        responsive: true,
+        height: 80,
+        barWidth: 2,
+        barRadius: 3,
+      });
+
+      // Load selected podcast audio
+      waveSurfer.load(selectedPodcast.audioFile);
+      
+      // Set volume
+      waveSurfer.setVolume(volume);
+
+      // Play if previously playing
+      if (isPlaying) {
+        waveSurfer.play();
+      }
+
+      // Store reference
+      waveSurferRef.current = waveSurfer;
+
+      // Cleanup
+      return () => {
+        waveSurfer.destroy();
+      };
+    }
+  }, [selectedPodcastIndex]);
+
+  const styles = {
+    container: {
+      fontFamily: 'Arial, sans-serif',
+      maxWidth: '1200px',
+      margin: '0 auto',
+      backgroundColor: '#f8f9fa',
+      borderRadius: '15px',
+      boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh',
+      padding: '20px',
+    },
+    header: {
+      backgroundColor: '#4a90e2',
+      color: 'white',
+      padding: '15px',
+      textAlign: 'center',
+      borderRadius: '10px 10px 0 0',
+      marginBottom: '20px',
+    },
+    content: {
+      display: 'flex',
+      gap: '20px',
+      flexWrap: 'wrap',
+    },
+    podcastList: {
+      flex: '1 1 300px',
+      maxHeight: '600px',
+      overflowY: 'auto',
+      backgroundColor: 'white',
+      borderRadius: '10px',
+      padding: '15px',
+      boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+    },
+    podcastItem: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '10px',
+      margin: '5px 0',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease',
+    },
+    activeItem: {
+      backgroundColor: '#e6f2ff',
+      transform: 'scale(1.02)',
+    },
+    playerContainer: {
+      flex: '2 1 500px',
+      backgroundColor: 'white',
+      borderRadius: '10px',
+      padding: '20px',
+      boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+    },
+    audioControls: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '20px',
+    },
+    controlButton: {
+      background: '#4a90e2',
+      color: 'white',
+      border: 'none',
+      borderRadius: '50%',
+      width: '50px',
+      height: '50px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      transition: 'transform 0.2s',
+    },
+    volumeControl: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+    },
+    videoContainer: {
+      width: '100%',
+      borderRadius: '10px',
+      overflow: 'hidden',
+      marginTop: '20px',
+      boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+    },
+    videoIframe: {
+      width: '100%',
+      height: '300px',
+      border: 'none',
+    }
+  };
+
+  const Title = styled.h1`
   font-size: 2.5rem;
-  color: #2d3436;
-  margin-bottom: 30px;
   text-align: center;
-
+  margin-bottom: 40px;
+  color: #333;
+  
   span:first-child {
     color: #4A90E2;
   }
-
+  
   span:last-child {
     color: #F5A623;
   }
 `;
 
-const ContentContainer = styled.div`
-  display: flex;
-  width: 100%;
-  gap: 40px;
-  justify-content: center;
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-`;
-
-const AudioSection = styled.div`
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  margin-top:7%;
-
-  @media (max-width: 1024px) {
-    max-width: 100%;
-  }
-`;
-
-const VideoSection = styled.div`
-  width: 100%;
-  max-width: 600px;
-
-  @media (max-width: 1024px) {
-    max-width: 100%;
-  }
-`;
-
-const AudioContainer = styled.div`
-  display: flex;
-  align-items: center;
-  background: #f8f8f8;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-`;
-
-const PlayPauseButton = styled.button`
-  background: #333;
-  border: none;
-  border-radius: 50%;
-  width: 90px;
-  height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  color: #fff;
-  margin-right: 20px;
-
-  &:hover {
-    background: #555;
-  }
-
-  @media (max-width: 768px) {
-    width: 70px;
-    height: 70px;
-    margin-right: 10px;
-  }
-`;
-
-const WaveContainer = styled.div`
-  flex-grow: 1;
-  height: 120px;
-
-  @media (max-width: 768px) {
-    height: 100px;
-  }
-`;
-
-const VideoContainer = styled.div`
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-`;
-
-const VideoIframe = styled.iframe`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-`;
-
-const Footer = styled.div`
-  margin-top: 30px;
-  text-align: center;
-`;
-
-const FooterText = styled.p`
-  color: #636e72;
-  font-size: 1rem;
-`;
-
-const PodcastPlayer = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const waveSurferRef = useRef(null);
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    // Initialize WaveSurfer
-    waveSurferRef.current = WaveSurfer.create({
-      container: containerRef.current,
-      waveColor: "#999",
-      progressColor: "black",
-      cursorColor: "#333",
-      barWidth: 2,
-      barRadius: 2,
-      height: 120,
-      responsive: true,
-      backend: "WebAudio",
-    });
-
-    waveSurferRef.current.load(audioFile);
-
-    waveSurferRef.current.on("finish", () => {
-      setIsPlaying(false);
-    });
-
-    return () => waveSurferRef.current.destroy();
-  }, []);
-
-  const togglePlay = () => {
-    if (isPlaying) {
-      waveSurferRef.current.pause();
-    } else {
-      waveSurferRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
   return (
-    <PageContainer>
+    <div style={styles.container}>
       <Title>
-        <span>Amazing</span> <span>Podcast</span>
+        <span>Podcast for </span> <span> You</span>
       </Title>
       
-      <ContentContainer>
-        <AudioSection>
-          <AudioContainer>
-            <PlayPauseButton onClick={togglePlay}>
-              {isPlaying ? <Pause size={48} /> : <Play size={48} />}
-            </PlayPauseButton>
-            <WaveContainer ref={containerRef}></WaveContainer>
-          </AudioContainer>
-        </AudioSection>
+      <div style={styles.content}>
+        {/* Podcast List */}
+        <div style={styles.podcastList}>
+          <h2>Podcast Library</h2>
+          {podcastData.map((podcast, index) => (
+            <div 
+              key={podcast.id}
+              style={{
+                ...styles.podcastItem,
+                ...(selectedPodcastIndex === index ? styles.activeItem : {})
+              }}
+              onClick={() => {
+                setSelectedPodcastIndex(index);
+                setIsPlaying(false);
+              }}
+            >
+              <Music style={{ marginRight: '10px', color: '#4a90e2' }} />
+              <div>
+                <h3 style={{ margin: 0 }}>{podcast.title}</h3>
+                <p style={{ margin: 0, color: 'gray', fontSize: '0.8em' }}>
+                  {podcast.subtitle}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
 
-        <VideoSection>
-          <VideoContainer>
-            <VideoIframe
-              src="https://www.youtube.com/embed/056qll-07ak"
+        {/* Player Container */}
+        <div style={styles.playerContainer}>
+          <h2>{selectedPodcast.title}</h2>
+          <p style={{ color: 'gray' }}>{selectedPodcast.description}</p>
+          
+          {/* Audio Controls */}
+          <div style={styles.audioControls}>
+            <button 
+              style={styles.controlButton} 
+              onClick={handlePrevious}
+            >
+              <SkipBack />
+            </button>
+
+            <button 
+              style={styles.controlButton} 
+              onClick={togglePlay}
+            >
+              {isPlaying ? <Pause /> : <Play />}
+            </button>
+
+            <button 
+              style={styles.controlButton} 
+              onClick={handleNext}
+            >
+              <SkipForward />
+            </button>
+
+            {/* Volume Control */}
+            <div style={styles.volumeControl}>
+              <div onClick={toggleMute} style={{cursor: 'pointer'}}>
+                {volume === 0 ? <VolumeX /> : <Volume2 />}
+              </div>
+              <input 
+                type="range"
+                min="0"
+                max="1"
+                step="0.1"
+                value={volume}
+                onChange={handleVolumeChange}
+              />
+            </div>
+          </div>
+
+          {/* Waveform */}
+          <div ref={containerRef} style={{ width: '100%', height: '80px' }}></div>
+
+          {/* Video Section */}
+          <div style={styles.videoContainer}>
+            <iframe
+              src="https://www.youtube.com/embed/YRJ6xoiRcpQ"
+              style={styles.videoIframe}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
-              title="Podcast Video"
+              title="Podcast Related Video"
             />
-          </VideoContainer>
-        </VideoSection>
-      </ContentContainer>
-
-      <Footer>
-        <FooterText>Enjoy the podcast and video content!</FooterText>
-      </Footer>
-    </PageContainer>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
