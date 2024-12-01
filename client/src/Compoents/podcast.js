@@ -197,7 +197,7 @@ const PodcastPlayer = () => {
       borderRadius: '10px',
       padding: '15px',
       boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-      overflowY:'auto'
+      overflowY: 'auto',
     },
     podcastItem: {
       display: 'flex',
@@ -254,8 +254,19 @@ const PodcastPlayer = () => {
       width: '100%',
       height: '400px',
       border: 'none',
-    }
+    },
+    // Add media queries for mobile view
+    '@media (max-width: 768px)': {
+      controlButton: {
+        width: '25px',
+        height: '25px',
+      },
+      videoIframe: {
+        height: '200px',
+      },
+    },
   };
+  
 
   const Title = styled.h1`
   font-size: 2.5rem;
